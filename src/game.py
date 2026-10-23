@@ -1,5 +1,27 @@
+#This is where the game play itself
+
 import numpy as np
-import math
+import math,sys
+
+sys.path.append('../Conway_Game/src')
+from config import *
+
+def start(): 
+    ones = []
+    n = np.zeros((GRID_SIZE,GRID_SIZE),dtype ="int64")
+    #Place un glider comme exemple
+    n[2][3] = 1
+    n[1][2] = 1
+    ones.append([2,3])
+    ones.append([1,2])
+    for i in range(1,4):
+        n[3][i]= 1
+        ones.append([3,i])
+    return n, ones
+
+
+
+
 
 def dist(x,y):
     a = [x[0]-y[0],x[1]-y[1]]
@@ -7,7 +29,7 @@ def dist(x,y):
 
 def game(n):
     grid = n
-    new = np.zeros((10,10),dtype ="int64")
+    new = np.zeros((GRID_SIZE,GRID_SIZE),dtype ="int64")
     
     #répertorie la pos de chaque 1 de la matrice dans la liste "ones"
     ones = []
@@ -39,7 +61,15 @@ def game(n):
                 if 2<=grid[i][j]<=3:
                     new[i][j] = 1
     grid = new
-    return new
+    n = new
+    
+    ones = []
+    for i in range(len(n)):
+        for j in range(len(n)):
+            if n[i][j] == 1:
+                ones.append([i,j])
+    return new, ones
+
 
 
 

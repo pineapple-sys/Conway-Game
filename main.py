@@ -1,52 +1,40 @@
-import pygame, game, sys,numpy as np
+#Print the result of game.py
+import pygame, sys
+from src import game
+from src.config import *
 
-pygame.init()
-clock = pygame.time.Clock()
-WIDTH, HEIGHT = 400,400
-screen = pygame.display.set_mode((WIDTH,HEIGHT))
-ones = []
+def main():  
+    pygame.init()
+    clock = pygame.time.Clock()
+    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    running = True
+    timer = 0
+    n, ones = game.start()
+    while running:
+        dt = clock.tick(FPS)/1000
+        timer +=dt
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                running = False 
+        if timer >= COOLDOWN:
+            timer = 0
+            n, ones= game.game(n)
+            print(n)
+        screen.fill(BACKGROUND_COLOR)
+        if ones:
+            for i in ones:
+                pygame.draw.rect(screen,CELL_COLOR,(i[1]*CELLS_SIZE,i[0]*CELLS_SIZE,CELLS_SIZE,CELLS_SIZE))   
+        
+        #--grille 
+        for i in range(0,WIDTH+1,CELLS_SIZE):
+            for j in range(0,HEIGHT+1,CELLS_SIZE):
+                pygame.draw.rect(screen,GRID_COLOR,(0,0,i,j),1)
+        #--
+        
+        pygame.display.flip()
+    pygame.quit()
+    sys.exit()
 
-running = True
-timer = 0
-n = np.zeros((10,10),dtype ="int64")
-#Place un glider comme exemple
-n[2][3] = 1
-n[1][2] = 1
-ones.append([2,3])
-ones.append([1,2])
-for i in range(1,4):
-    n[3][i]= 1
-    ones.append([3,i])
+if __name__ == "__main__":
+    main()
 
-
-while running:
-    dt = clock.tick(60)/1000
-    timer +=dt
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            running = False 
-    
-    
-    if timer >= 1:
-        timer = 0
-        n = game.game(n)
-        print(n)
-        ones = []
-        for i in range(len(n)):
-            for j in range(len(n)):
-                if n[i][j] == 1:
-                    ones.append([i,j])
-    screen.fill((0,0,0))
-    if ones:
-        for i in ones:
-            pygame.draw.rect(screen,(255,255,255),(i[1]*40,i[0]*40,40,40))
-            
-    #--grille 
-    for i in range(0,WIDTH+1,40):
-        for j in range(0,HEIGHT+1,40):
-            pygame.draw.rect(screen,(128,128,128),(0,0,i,j),1)
-    #--
-    
-    pygame.display.flip()
-pygame.quit()
-sys.exit()
