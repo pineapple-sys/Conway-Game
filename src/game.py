@@ -46,10 +46,8 @@ def game(n):
                 if [i,j]!=o:
                     if dist([i,j],o) ==1:
                         count+=1
-            if  grid[i][j] !=1:
-                grid[i][j] = count
-            else:
-                grid[i][j] = count
+            grid[i][j] = count
+                
 
     #inscrit les 1 dans la matrice "new" en fonction des règles du jeu
     for i in range(len(grid)):
