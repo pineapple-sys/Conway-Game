@@ -45,6 +45,4 @@ def game(n):
                 new[i][j] = 1  
                 ones.add((i,j)) 
             
-    print(ones)
     return new, ones
-

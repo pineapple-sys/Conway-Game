@@ -6,25 +6,36 @@ from src.config import *
 def main():  
     pygame.init()
     clock = pygame.time.Clock()
-    screen = pygame.display.set_mode((WIDTH,HEIGHT))
+    screen = pygame.display.set_mode((WIDTH,HEIGHT+PAUSE_PLAY_WINDOW))
     running = True
     timer = 0
     n, ones = game.start()
+    # //PLAY/PAUSE BUTTON
+    image = pygame.image.load("tf.webp").convert_alpha()
+    image = pygame.transform.smoothscale(image, (PLAY_BUTTON_SIZE, PLAY_BUTTON_SIZE))
+    image_rect = image.get_rect()
+    image_rect.topleft = (WIDTH//2-PLAY_BUTTON_SIZE//2, HEIGHT+PAUSE_PLAY_WINDOW//4)
+    #//
+    play = True
     while running:
         dt = clock.tick(FPS)/1000
         timer +=dt
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1 and image_rect.collidepoint(event.pos):
+                print('E')
+                play = not(play)
         if timer >= COOLDOWN:
             timer = 0
-            n, ones= game.game(n)
-            print(n)
+            if play:
+                n, ones= game.game(n)
+                print(n)
         screen.fill(BACKGROUND_COLOR)
+        screen.blit(image, (WIDTH//2-PLAY_BUTTON_SIZE//2, HEIGHT+PAUSE_PLAY_WINDOW//4))
         if ones:
             for i in ones:
                 pygame.draw.rect(screen,CELL_COLOR,(i[1]*CELLS_SIZE,i[0]*CELLS_SIZE,CELLS_SIZE,CELLS_SIZE))   
-        
         #--grille 
         for i in range(0,WIDTH+1,CELLS_SIZE):
             for j in range(0,HEIGHT+1,CELLS_SIZE):

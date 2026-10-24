@@ -3,6 +3,8 @@
 # Window's size
 WIDTH = 400
 HEIGHT = 400
+PAUSE_PLAY_WINDOW = 100
+PLAY_BUTTON_SIZE =50
 
 # Grid and Cells
 GRID_SIZE = 10
