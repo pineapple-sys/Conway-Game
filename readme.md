@@ -12,6 +12,6 @@ This is my attempt to reproduce the simple Game of Life.
 - `numpy`
 
 ## Upcoming Features
-- `Draw`: Let the player draw on the grid to decide what cells are alive
-- `Play/Stop buttons`
+- [X] `Draw`: Let the player draw on the grid to decide what cells are alive
+- [X] `Play/Stop buttons`
 - `Infinite Grid` -> **`Movement`**
