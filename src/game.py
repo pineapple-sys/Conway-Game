@@ -19,18 +19,16 @@ def start():
         ones.add((3,i))
     return n, ones
 
-def game(n):
-    grid = n
+def game(ones,len_grid):
     new = np.zeros((GRID_SIZE,GRID_SIZE),dtype ="int64")
     
     #répertorie la pos de chaque 1 de la matrice dans la liste "ref"
     
-    ref = set(tuple(cell) for cell in np.argwhere(grid == 1))
-
+    ref = ones
     ones = set()
     #Regarde la distance entre chaque carré et un 1 présent sur une case diff de lui meme, compte le nombre de fois ou cette condition est remplie et remplace le numéro de la case par ce nombre de fois
-    for i in range(len(grid)):
-        for j in range(len(grid)):
+    for i in range(len_grid):
+        for j in range(len_grid):
             count = 0
             for o in ref:
                 if (i,j)!=o:
@@ -45,4 +43,4 @@ def game(n):
                 new[i][j] = 1  
                 ones.add((i,j)) 
             
-    return new, ones
+    return ones

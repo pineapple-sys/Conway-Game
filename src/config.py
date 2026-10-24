@@ -7,7 +7,7 @@ PAUSE_PLAY_WINDOW = 100
 PLAY_BUTTON_SIZE =50
 
 # Grid and Cells
-GRID_SIZE = 10
+GRID_SIZE = 10 #matrice d'ordre N
 CELLS_SIZE = 40
 FPS = 60
 COOLDOWN = 1  # Wait Time between two grids

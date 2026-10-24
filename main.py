@@ -23,13 +23,22 @@ def main():
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False 
-            if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1 and image_rect.collidepoint(event.pos):
-                print('E')
-                play = not(play)
+            if event.type == pygame.MOUSEBUTTONDOWN and event.button ==1:
+                if image_rect.collidepoint(event.pos):
+                    print('Pause/Play')
+                    play = not(play)
+                if not play:
+                    if 0<=event.pos[0]<= WIDTH and 0 <= event.pos[1]<= HEIGHT:
+                        coord = (round(event.pos[1]//CELLS_SIZE),round(event.pos[0]//CELLS_SIZE))
+                        if coord not in ones:
+                            ones.add(coord)
+                        else:
+                            ones.remove(coord)
+
         if timer >= COOLDOWN:
             timer = 0
             if play:
-                n, ones= game.game(n)
+                ones = game.game(ones,GRID_SIZE)
                 print(n)
         screen.fill(BACKGROUND_COLOR)
         screen.blit(image, (WIDTH//2-PLAY_BUTTON_SIZE//2, HEIGHT+PAUSE_PLAY_WINDOW//4))
